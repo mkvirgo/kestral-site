@@ -88,7 +88,7 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, error: "Form is not configured yet." }, 500);
   }
 
-  const notifyTo = env.NOTIFY_EMAIL || "kestrelitconsulting@gmail.com";
+  const notifyTo = env.NOTIFY_EMAIL || "contact@kestral.us";
 
   const html = `
     <h2>New inquiry from kestrelitconsulting.com</h2>

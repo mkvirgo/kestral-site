@@ -11,7 +11,7 @@
     var email = document.getElementById('email').value.trim();
     var kind = document.getElementById('kind').value;
     var msg = document.getElementById('msg').value.trim();
-    var company = document.getElementById('company').value; // honeypot
+    var company = document.getElementById('hp_check').value; // honeypot
     if (!name || !email) return;
 
     btn.disabled = true;

@@ -324,10 +324,6 @@
   }
   .pay-row .txt{ font-size:.88rem; color:var(--ink-soft); }
   .pay-row .txt strong{ display:block; color:var(--ink); font-family:"Fraunces",serif; font-size:1rem; font-weight:600; margin-bottom:2px; }
-
-  @media (max-width: 860px){
-    .pricing-grid{ grid-template-columns:1fr; }
-  }
 </style>
 </head>
 <body>
@@ -545,7 +541,7 @@
       </details>
       <details class="faq-item">
         <summary>I already have an IT vendor or in-house person — can you still help?</summary>
-        <p>Yes, this is common for web development or a specific project (a network redesign, a migration) that a generalist doesn't have time for. I'll work alongside whoever already manages your systems.</p>
+        <p>PYes, this is common for web development or a specific project (a network redesign, a migration) that a generalist doesn't have time for. I'll work alongside whoever already manages your systems.</p>
       </details>
       <details class="faq-item">
         <summary>Do you sign NDAs or contracts?</summary>
@@ -586,7 +582,7 @@
       <div class="contact-card">
         <div class="row">
           <span class="k">Email</span>
-          <span class="v"><a href="contact@kestral.us">contact@kestral.us</a></span>
+          <span class="v"><a href="mailto:contact@kestral.us">contact@kestral.us</a></span>
         </div>
         <div class="row">
           <span class="k">Response time</span>
@@ -629,12 +625,12 @@
           <textarea id="msg" name="msg" maxlength="4000" placeholder="What you're working with, what's not working, and roughly when you'd like this done."></textarea>
         </div>
         <!-- Honeypot: hidden from real visitors, invisible bots tend to fill it in. -->
-<div style="display:none;" aria-hidden="true">
-  <label for="hp_check">Leave this field blank</label>
-  <input id="hp_check" name="hp_check" type="text" tabindex="-1" autocomplete="off">
-</div>
-        <!-- Cloudflare Turnstile — replace data-sitekey once you create a widget (see DEPLOY.md). -->
-        <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY" data-callback="onTurnstileVerified"></div>
+        <div style="display:none;" aria-hidden="true">
+          <label for="hp_check">Leave this field blank</label>
+          <input id="hp_check" name="hp_check" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <!-- Cloudflare Turnstile — Remember to paste your actual key in data-sitekey -->
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAABbbbbbbCCCCCCdd" data-callback="onTurnstileVerified"></div>
         <button class="btn" type="submit" id="contact-submit" style="align-self:flex-start;">Send message</button>
         <p class="form-note" id="contact-note">Submitting sends this straight to Kestral by email — no mailbox is checked live, so for anything urgent use the email address directly.</p>
       </form>
@@ -656,7 +652,7 @@
 <!-- Calendly inline widget -->
 <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
-<!-- Tawk.to live chat bootstrap (edit /assets/tawk.js to add your real widget ID) -->
+<!-- Tawk.to live chat bootstrap -->
 <script src="/assets/tawk.js" defer></script>
 
 <!-- Contact form handling -->

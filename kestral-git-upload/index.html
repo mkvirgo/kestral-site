@@ -626,10 +626,10 @@
           <textarea id="msg" name="msg" maxlength="4000" placeholder="What you're working with, what's not working, and roughly when you'd like this done."></textarea>
         </div>
         <!-- Honeypot: hidden from real visitors, invisible bots tend to fill it in. -->
-        <div style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
-          <label for="company">Company</label>
-          <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
-        </div>
+<div style="display:none;" aria-hidden="true">
+  <label for="hp_check">Leave this field blank</label>
+  <input id="hp_check" name="hp_check" type="text" tabindex="-1" autocomplete="off">
+</div>
         <!-- Cloudflare Turnstile — replace data-sitekey once you create a widget (see DEPLOY.md). -->
         <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY" data-callback="onTurnstileVerified"></div>
         <button class="btn" type="submit" id="contact-submit" style="align-self:flex-start;">Send message</button>
@@ -650,6 +650,12 @@
 <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
 <!-- Tawk.to live chat bootstrap (edit /assets/tawk.js to add your real widget ID) -->
+<script src="/assets/tawk.js" defer></script>
+
+<!-- Contact form handling -->
+<script src="/assets/main.js" defer></script>
+</body>
+</html>
 <script src="/assets/tawk.js" defer></script>
 
 <!-- Contact form handling -->

@@ -37,7 +37,7 @@
     }).catch(function(err){
       btn.disabled = false;
       btn.textContent = 'Send message';
-      note.textContent = (err && err.message) ? err.message : 'Couldn\'t send the form right now — please email kestrelitconsulting@gmail.com directly instead.';
+      note.textContent = (err && err.message) ? err.message : 'Couldn\'t send the form right now — please email contact@kestral.us directly instead.';
       note.style.color = 'var(--accent)';
       if (window.turnstile && typeof window.turnstile.reset === 'function') {
         window.turnstile.reset();

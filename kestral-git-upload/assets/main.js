@@ -24,11 +24,18 @@
         name: name, email: email, kind: kind, message: msg,
         company: company, turnstileToken: turnstileToken
       })
-    }).then(function(res){
-      return res.json().then(function(data){
-        if (!res.ok || !data.ok) throw new Error(data.error || 'Send failed');
-        return data;
-      });
+    }).then(async function(res){
+      var isJson = res.headers.get('content-type')?.includes('application/json');
+      var data = isJson ? await res.json() : null;
+
+      if (!res.ok) {
+        var errorMsg = (data && data.error) ? data.error : 'Server error (' + res.status + '). Please try again later.';
+        throw new Error(errorMsg);
+      }
+      if (data && !data.ok) {
+        throw new Error(data.error || 'Send failed');
+      }
+      return data;
     }).then(function(){
       form.hidden = true;
       note.textContent = 'Thanks, ' + name + ' — this has been sent, and Kestrel will reply at ' + email + ' within one business day.';

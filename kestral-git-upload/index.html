@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kestrel IT Consulting</title>
+<meta name="description" content="One-person IT consultancy for small businesses — web development, networks, security, and ongoing support.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  :root{
+    --bg:#f6f7f9;
+    --surface:#ffffff;
+    --ink:#12181f;
+    --ink-soft:#4d5762;
+    --line:#e2e6ec;
+    --accent:#1c3fae;
+    --accent-ink:#ffffff;
+    --accent-soft:#e8ecfb;
+    --ok:#1a7d4d;
+    --shadow: 0 1px 2px rgba(18,24,31,.04), 0 8px 24px -12px rgba(18,24,31,.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0b0e13;
+      --surface:#121722;
+      --ink:#e9edf3;
+      --ink-soft:#9aa5b3;
+      --line:#232a37;
+      --accent:#6f8fff;
+      --accent-ink:#0b0e13;
+      --accent-soft:#1a2440;
+      --ok:#4fd393;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b0e13;
+    --surface:#121722;
+    --ink:#e9edf3;
+    --ink-soft:#9aa5b3;
+    --line:#232a37;
+    --accent:#6f8fff;
+    --accent-ink:#0b0e13;
+    --accent-soft:#1a2440;
+    --ok:#4fd393;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:"Fraunces", Georgia, "Times New Roman", serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, monospace; }
+  a{ color:inherit; }
+  ::selection{ background:var(--accent-soft); }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+
+  /* NAV */
+  header.site{
+    position:sticky; top:0; z-index:20;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 0;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:"Fraunces",serif; font-weight:600; font-size:1.15rem; }
+  .brand .mark{
+    width:28px; height:28px; border-radius:7px;
+    background:var(--accent); color:var(--accent-ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:.85rem;
+  }
+  nav .links{ display:flex; gap:28px; font-size:.92rem; color:var(--ink-soft); }
+  nav .links a{ text-decoration:none; }
+  nav .links a:hover{ color:var(--ink); }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent); color:var(--accent-ink);
+    padding:10px 18px; border-radius:8px;
+    font-size:.9rem; font-weight:500; text-decoration:none;
+    border:1px solid transparent;
+    transition:opacity .15s ease;
+  }
+  .btn:hover{ opacity:.88; }
+  .btn.ghost{
+    background:transparent; color:var(--ink); border-color:var(--line);
+  }
+  .btn.ghost:hover{ background:var(--surface); opacity:1; }
+
+  /* HERO */
+  .hero{ padding:76px 0 64px; }
+  .hero-grid{
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:"IBM Plex Mono",monospace; font-size:.78rem; letter-spacing:.06em;
+    color:var(--ink-soft); text-transform:uppercase;
+    padding:5px 10px; border:1px solid var(--line); border-radius:100px;
+    margin-bottom:22px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--ok); }
+  .hero h1{ font-size:3.1rem; line-height:1.06; }
+  .hero h1 em{ font-style:normal; color:var(--accent); }
+  .hero p.lede{
+    color:var(--ink-soft); font-size:1.15rem; line-height:1.6; max-width:52ch;
+    margin:22px 0 30px;
+  }
+  .hero-ctas{ display:flex; gap:14px; margin-bottom:8px; }
+
+  /* status panel */
+  .status-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .status-card .bar{
+    display:flex; align-items:center; gap:7px;
+    padding:12px 16px; border-bottom:1px solid var(--line);
+    font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-soft);
+  }
+  .status-card .bar .lamp{ width:8px; height:8px; border-radius:50%; }
+  .status-card .rows{ padding:6px 0; }
+  .status-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 18px; font-family:"IBM Plex Mono",monospace; font-size:.83rem;
+    border-bottom:1px solid var(--line);
+  }
+  .status-row:last-child{ border-bottom:none; }
+  .status-row .name{ color:var(--ink); }
+  .status-row .val{ display:flex; align-items:center; gap:8px; color:var(--ok); }
+  .status-row .val .lamp{ width:7px; height:7px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 3px color-mix(in srgb, var(--ok) 18%, transparent); }
+
+  /* SECTION shared */
+  section{ padding:64px 0; border-top:1px solid var(--line); }
+  .section-head{ max-width:60ch; margin-bottom:42px; }
+  .section-head .tag{
+    font-family:"IBM Plex Mono",monospace; font-size:.78rem; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--accent); display:block; margin-bottom:10px;
+  }
+  .section-head h2{ font-size:2rem; }
+  .section-head p{ color:var(--ink-soft); margin-top:12px; line-height:1.6; }
+
+  /* SERVICES */
+  .services-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:20px;
+  }
+  .svc{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:26px 24px; box-shadow:var(--shadow);
+  }
+  .svc .icon{
+    width:38px; height:38px; border-radius:9px; background:var(--accent-soft); color:var(--accent);
+    display:flex; align-items:center; justify-content:center; margin-bottom:16px;
+  }
+  .svc h3{ font-size:1.12rem; margin-bottom:8px; }
+  .svc p{ color:var(--ink-soft); font-size:.93rem; line-height:1.55; margin:0; }
+
+  /* PROCESS */
+  .process{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    counter-reset:step;
+  }
+  .step{
+    position:relative; padding:0 20px 0 0;
+  }
+  .step:not(:last-child)::after{
+    content:""; position:absolute; top:15px; right:-2px; width:calc(100% - 40px);
+    border-top:1px dashed var(--line);
+  }
+  .step .num{
+    font-family:"IBM Plex Mono",monospace; color:var(--accent); font-size:.85rem;
+    display:block; margin-bottom:14px;
+  }
+  .step h3{ font-size:1.02rem; margin-bottom:8px; }
+  .step p{ color:var(--ink-soft); font-size:.88rem; line-height:1.55; margin:0; }
+
+  /* STACK */
+  .stack-row{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{
+    font-family:"IBM Plex Mono",monospace; font-size:.82rem;
+    padding:8px 14px; border:1px solid var(--line); border-radius:100px;
+    color:var(--ink-soft); background:var(--surface);
+  }
+
+  /* WHY / STATS */
+  .why-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
+  .why-grid p{ color:var(--ink-soft); line-height:1.7; font-size:1.02rem; }
+  .stat-list{ display:flex; flex-direction:column; gap:22px; }
+  .stat{ display:flex; align-items:baseline; gap:14px; border-bottom:1px solid var(--line); padding-bottom:18px; }
+  .stat .num{ font-family:"Fraunces",serif; font-size:2.1rem; color:var(--accent); font-weight:600; min-width:90px; }
+  .stat .label{ color:var(--ink-soft); font-size:.92rem; line-height:1.5; }
+
+  /* CONTACT */
+  .contact-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; }
+  .contact-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:28px; box-shadow:var(--shadow);
+  }
+  .contact-card .row{ display:flex; flex-direction:column; gap:4px; padding:14px 0; border-bottom:1px solid var(--line); }
+  .contact-card .row:last-child{ border-bottom:none; }
+  .contact-card .row .k{ font-family:"IBM Plex Mono",monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); }
+  .contact-card .row .v{ font-size:1rem; }
+  .contact-card .row a{ text-decoration:none; color:var(--ink); }
+  .contact-card .row a:hover{ color:var(--accent); }
+
+  form{ display:flex; flex-direction:column; gap:16px; }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-size:.82rem; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace; }
+  .field input, .field textarea, .field select{
+    font:inherit; font-family:"IBM Plex Sans",sans-serif;
+    background:var(--surface); color:var(--ink);
+    border:1px solid var(--line); border-radius:8px;
+    padding:11px 13px; font-size:.95rem;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus{
+    border-color:var(--accent);
+  }
+  .field textarea{ resize:vertical; min-height:110px; }
+  .form-note{ font-size:.8rem; color:var(--ink-soft); margin-top:-4px; }
+
+  footer{
+    border-top:1px solid var(--line); padding:32px 0; margin-top:8px;
+  }
+  footer .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    color:var(--ink-soft); font-size:.85rem;
+  }
+  footer .brand-mini{ display:flex; align-items:center; gap:8px; font-family:"IBM Plex Mono",monospace; }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .services-grid{ grid-template-columns:1fr 1fr; }
+    .process{ grid-template-columns:1fr 1fr; gap:28px 20px; }
+    .step:not(:last-child)::after{ display:none; }
+    .why-grid{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    nav .links{ display:none; }
+    .hero h1{ font-size:2.3rem; }
+  }
+  @media (max-width: 560px){
+    .services-grid{ grid-template-columns:1fr; }
+    .process{ grid-template-columns:1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  /* PRICING */
+  .pricing-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; align-items:stretch; }
+  .price-card{
+    display:flex; flex-direction:column; gap:18px;
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:28px 24px; box-shadow:var(--shadow);
+  }
+  .price-card.featured{ border-color:var(--accent); position:relative; }
+  .price-card .badge{
+    position:absolute; top:-12px; left:24px;
+    background:var(--accent); color:var(--accent-ink);
+    font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.04em; text-transform:uppercase;
+    padding:4px 10px; border-radius:100px;
+  }
+  .price-card h3{ font-size:1.1rem; }
+  .price-card .price{ display:flex; align-items:baseline; gap:6px; }
+  .price-card .price .amount{ font-family:"Fraunces",serif; font-size:2.1rem; font-weight:600; }
+  .price-card .price .period{ color:var(--ink-soft); font-size:.85rem; }
+  .price-card .desc{ color:var(--ink-soft); font-size:.9rem; line-height:1.5; margin:0; }
+  .price-card ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .price-card li{ display:flex; gap:8px; font-size:.88rem; color:var(--ink); align-items:flex-start; }
+  .price-card li::before{ content:"✓"; color:var(--ok); font-weight:600; flex-shrink:0; }
+  .price-note{ margin-top:26px; color:var(--ink-soft); font-size:.85rem; }
+
+  /* FAQ */
+  .faq-list{ display:flex; flex-direction:column; gap:0; border-top:1px solid var(--line); max-width:74ch; }
+  .faq-item{ border-bottom:1px solid var(--line); }
+  .faq-item summary{
+    cursor:pointer; list-style:none; padding:20px 4px; font-family:"Fraunces",serif; font-weight:500;
+    font-size:1.05rem; display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::after{
+    content:"+"; font-family:"IBM Plex Mono",monospace; color:var(--accent); font-size:1.3rem; flex-shrink:0;
+  }
+  .faq-item[open] summary::after{ content:"–"; }
+  .faq-item p{ color:var(--ink-soft); font-size:.94rem; line-height:1.6; margin:0 4px 20px; max-width:62ch; }
+
+  /* BOOKING */
+  .book-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .book-card iframe{ display:block; width:100%; border:0; height:700px; }
+  .book-fallback{ text-align:center; padding:14px; border-top:1px solid var(--line); font-size:.9rem; color:var(--ink-soft); }
+  .book-fallback a{ color:var(--accent); text-decoration:none; font-weight:500; }
+  .book-fallback a:hover{ text-decoration:underline; }
+
+  /* PAY ROW */
+  .pay-row{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:var(--accent-soft); border:1px solid var(--line); border-radius:10px;
+    padding:16px 18px; margin-top:16px;
+  }
+  .pay-row .txt{ font-size:.88rem; color:var(--ink-soft); }
+  .pay-row .txt strong{ display:block; color:var(--ink); font-family:"Fraunces",serif; font-size:1rem; font-weight:600; margin-bottom:2px; }
+
+  @media (max-width: 860px){
+    .pricing-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <nav>
+      <div class="brand"><span class="mark">K</span> Kestrel IT Consulting</div>
+      <div class="links">
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#about">About</a>
+      </div>
+      <a class="btn" href="#book">Book a call</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="border-top:none;">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> Taking on new clients this quarter</span>
+      <h1>IT that <em>runs</em>,<br>not IT that <em>waits</em>.</h1>
+      <p class="lede">Kestrel is a one-person IT consultancy for small and growing businesses — web development, network and systems setup, and the ongoing support that keeps it all online. One point of contact, plain-English explanations, work you can actually maintain after I leave.</p>
+      <div class="hero-ctas">
+        <a class="btn" href="#contact">Get a quote</a>
+        <a class="btn ghost" href="#services">See what I do</a>
+      </div>
+    </div>
+    <div class="status-card">
+      <div class="bar"><span class="lamp" style="background:var(--ok)"></span> client-systems — status</div>
+      <div class="rows">
+        <div class="status-row"><span class="name">website &amp; hosting</span><span class="val"><span class="lamp"></span>up</span></div>
+        <div class="status-row"><span class="name">backups</span><span class="val"><span class="lamp"></span>current</span></div>
+        <div class="status-row"><span class="name">network / firewall</span><span class="val"><span class="lamp"></span>secured</span></div>
+        <div class="status-row"><span class="name">support ticket queue</span><span class="val"><span class="lamp"></span>0 open</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Services</span>
+      <h2>Everything after "we need a website" and before "it just works."</h2>
+      <p>Most small businesses don't need a full internal IT department — they need someone who can build it, wire it up, and be reachable when something breaks.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc">
+        <div class="icon">◧</div>
+        <h3>Web development</h3>
+        <p>Business sites, booking and ordering flows, internal tools and dashboards — built to load fast, work on a phone, and be easy to update without calling me every time.</p>
+      </div>
+      <div class="svc">
+        <div class="icon">▤</div>
+        <h3>Networks &amp; infrastructure</h3>
+        <p>Office and remote setups, secure Wi‑Fi, VPN access for remote staff, and file and print sharing that doesn't fall over the moment someone's laptop updates.</p>
+      </div>
+      <div class="svc">
+        <div class="icon">◇</div>
+        <h3>Security &amp; backups</h3>
+        <p>Firewall and access configuration, password and device policy that people will actually follow, and backups that are tested — not just scheduled.</p>
+      </div>
+      <div class="svc">
+        <div class="icon">▥</div>
+        <h3>Cloud &amp; hosting</h3>
+        <p>Migrating email, storage and line-of-business apps off aging on-site hardware and onto hosting that's monitored, backed up, and sized to what you actually use.</p>
+      </div>
+      <div class="svc">
+        <div class="icon">◫</div>
+        <h3>Automation &amp; integrations</h3>
+        <p>Connecting the tools you already use — forms to spreadsheets, spreadsheets to invoicing, invoicing to your inbox — so fewer things get copied by hand.</p>
+      </div>
+      <div class="svc">
+        <div class="icon">▦</div>
+        <h3>Ongoing support</h3>
+        <p>A monthly retainer or pay-as-you-go help desk for the stuff that comes up: a new hire's laptop, a printer that won't cooperate, a site that needs a summer refresh.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Engagement</span>
+      <h2>How a project actually goes.</h2>
+      <p>Four stages, in order, every time — so you know what's happening and when you'll hear from me next.</p>
+    </div>
+    <div class="process">
+      <div class="step">
+        <span class="num">01 — assess</span>
+        <h3>Discover</h3>
+        <p>A working session on what you have, what's breaking, and what "done" looks like — no jargon, no upsell.</p>
+      </div>
+      <div class="step">
+        <span class="num">02 — scope</span>
+        <h3>Plan</h3>
+        <p>A written scope and fixed quote or hourly estimate, so there are no surprises once work starts.</p>
+      </div>
+      <div class="step">
+        <span class="num">03 — build</span>
+        <h3>Deploy</h3>
+        <p>Build, test, and roll out in stages where possible, so the business keeps running while the work happens.</p>
+      </div>
+      <div class="step">
+        <span class="num">04 — support</span>
+        <h3>Maintain</h3>
+        <p>Handoff docs and, if you want it, an ongoing support plan — so it stays working after launch day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Pricing</span>
+      <h2>Straightforward rates, no surprise invoices.</h2>
+      <p>Starting points below — every quote is confirmed in writing before work begins. Larger builds are scoped individually.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Project-based</h3>
+        <div class="price"><span class="amount">$95</span><span class="period">/ hour</span></div>
+        <p class="desc">For one-off work: a new site, a network setup, a migration. Fixed-price quotes available once the scope is clear.</p>
+        <ul>
+          <li>Free initial consultation</li>
+          <li>Written scope &amp; estimate up front</li>
+          <li>No minimum commitment</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <span class="badge">Most popular</span>
+        <h3>Essential retainer</h3>
+        <div class="price"><span class="amount">$299</span><span class="period">/ month</span></div>
+        <p class="desc">Ongoing coverage for a small business running on a handful of systems.</p>
+        <ul>
+          <li>Up to 5 support hours / month</li>
+          <li>1 business day response time</li>
+          <li>Monthly backup &amp; security check</li>
+          <li>Discounted rate on overage hours</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <h3>Priority retainer</h3>
+        <div class="price"><span class="amount">$799</span><span class="period">/ month</span></div>
+        <p class="desc">For businesses that can't afford downtime — more hours, faster response, closer monitoring.</p>
+        <ul>
+          <li>Up to 15 support hours / month</li>
+          <li>Same business day response</li>
+          <li>Proactive monitoring &amp; monthly report</li>
+          <li>Priority scheduling for new projects</li>
+        </ul>
+      </div>
+    </div>
+    <p class="price-note">Rates shown are current starting rates and may vary by scope — actual site under active development, so treat these as illustrative until confirmed on a call.</p>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Tools of the trade</span>
+      <h2>Built on stable, well-supported technology.</h2>
+      <p>No exotic stacks that only I can maintain — everything here is documented, common, and easy to hand off.</p>
+    </div>
+    <div class="stack-row">
+      <span class="chip">React / Next.js</span>
+      <span class="chip">Node.js</span>
+      <span class="chip">WordPress</span>
+      <span class="chip">PostgreSQL</span>
+      <span class="chip">Linux (Debian/Ubuntu)</span>
+      <span class="chip">WireGuard VPN</span>
+      <span class="chip">Nginx</span>
+      <span class="chip">Docker</span>
+      <span class="chip">Google Workspace &amp; M365</span>
+      <span class="chip">Cloudflare</span>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap why-grid">
+    <div>
+      <span class="tag">Why Kestrel</span>
+      <h2 style="font-size:2rem; margin-bottom:16px;">Small enough to care, technical enough to actually fix it.</h2>
+      <p>Kestrel IT Consulting is a one-person practice, which means the person who scopes your project is the same person who builds it and answers the phone when something's wrong. No account managers, no ticket getting passed between three departments — just direct, hands-on work from someone who reads the logs before guessing.</p>
+      <p>The name comes from the bird: kestrels hover in place, scanning a wide field for the one thing that's moved. That's the job — watching the whole system so you don't have to.</p>
+    </div>
+    <div class="stat-list">
+      <div class="stat"><span class="num">1</span><span class="label">point of contact from quote to launch to support call</span></div>
+      <div class="stat"><span class="num">24h</span><span class="label">typical response time on existing support plans</span></div>
+      <div class="stat"><span class="num">100%</span><span class="label">documented handoffs — you own the accounts and code, always</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Questions</span>
+      <h2>Before you reach out.</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Do you work with businesses outside your local area?</summary>
+        <p>Yes — most support and web development work happens remotely. On-site visits are available by arrangement for network and hardware work that needs hands in the building.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What's actually included in a monthly retainer?</summary>
+        <p>A pool of support hours each month (remote or on-site), a set response time, and a monthly check of backups and security settings. Anything beyond the included hours is billed at a discounted rate rather than turned away.</p>
+      </details>
+      <details class="faq-item">
+        <summary>I already have an IT vendor or in-house person — can you still help?</summary>
+        <p>Yes, this is common for web development or a specific project (a network redesign, a migration) that a generalist doesn't have time for. I'll work alongside whoever already manages your systems.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do you sign NDAs or contracts?</summary>
+        <p>Yes — a mutual NDA and a written scope of work are standard before any project starts, at no extra cost.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What if a support issue comes up outside business hours?</summary>
+        <p>Retainer clients can flag anything as urgent by email or the contact form; response times outside business hours vary by plan and are confirmed when you sign up.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Book a call</span>
+      <h2>Grab 30 minutes on the calendar.</h2>
+      <p>No pitch, no pressure — just a walkthrough of what you're dealing with and whether it's a fit.</p>
+    </div>
+    <div class="book-card">
+      <div class="calendly-inline-widget" data-url="https://calendly.com/kestrelitconsulting/30min" style="min-width:320px;height:700px;"></div>
+      <div class="book-fallback">
+        Calendar not loading? <a href="https://calendly.com/kestrelitconsulting/30min" target="_blank" rel="noopener">Open it in a new tab ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">Get in touch</span>
+      <h2>Tell me what's broken, or what you're building.</h2>
+      <p>A couple of sentences is plenty to start — project type, rough timeline, and whether it's a one-off build or ongoing support.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="row">
+          <span class="k">Email</span>
+          <span class="v"><a href="mailto:kestrelitconsulting@gmail.com">kestrelitconsulting@gmail.com</a></span>
+        </div>
+        <div class="row">
+          <span class="k">Response time</span>
+          <span class="v">Within one business day</span>
+        </div>
+        <div class="row">
+          <span class="k">Availability</span>
+          <span class="v">New projects &amp; retainers open</span>
+        </div>
+        <div class="row">
+          <span class="k">Based in</span>
+          <span class="v">Remote-friendly, on-site by arrangement</span>
+        </div>
+        <div class="pay-row">
+          <span class="txt"><strong>Existing client?</strong>Pay an outstanding invoice online.</span>
+          <a class="btn ghost" href="https://buy.stripe.com/6oU28rf87a72d5hb5Da7C00" target="_blank" rel="noopener">Pay invoice</a>
+        </div>
+      </div>
+      <form id="contact-form">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Jordan Lee" required maxlength="120">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@company.com" required maxlength="254">
+        </div>
+        <div class="field">
+          <label for="kind">What do you need?</label>
+          <select id="kind" name="kind">
+            <option>Web development</option>
+            <option>Network / infrastructure setup</option>
+            <option>Security &amp; backups</option>
+            <option>Ongoing support retainer</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="msg">Project details</label>
+          <textarea id="msg" name="msg" maxlength="4000" placeholder="What you're working with, what's not working, and roughly when you'd like this done."></textarea>
+        </div>
+        <!-- Honeypot: hidden from real visitors, invisible bots tend to fill it in. -->
+        <div style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <!-- Cloudflare Turnstile — replace data-sitekey once you create a widget (see DEPLOY.md). -->
+        <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY" data-callback="onTurnstileVerified"></div>
+        <button class="btn" type="submit" id="contact-submit" style="align-self:flex-start;">Send message</button>
+        <p class="form-note" id="contact-note">Submitting sends this straight to Kestrel by email — no mailbox is checked live, so for anything urgent use the email address directly.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand-mini"><span class="mark" style="width:20px;height:20px;font-size:.7rem;border-radius:5px;background:var(--accent);color:var(--accent-ink);display:inline-flex;align-items:center;justify-content:center;">K</span> Kestrel IT Consulting</div>
+    <span>&copy; 2026 Kestrel IT Consulting</span>
+  </div>
+</footer>
+
+<!-- Calendly inline widget -->
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+<!-- Tawk.to live chat bootstrap (edit /assets/tawk.js to add your real widget ID) -->
+<script src="/assets/tawk.js" defer></script>
+
+<!-- Contact form handling -->
+<script src="/assets/main.js" defer></script>
+</body>
+</html>
